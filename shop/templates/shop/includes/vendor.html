@@ -1,0 +1,17 @@
+{% load static %}
+
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        {%for vendor in vendors %}
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                <div class="vendor-item border p-4">
+                    <img src="{{vendor.image}}" alt="">
+                    <h1>test</h1>
+                </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>

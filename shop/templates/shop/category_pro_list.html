@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title %}Marga's  E-shop {%endblock%}
+
+{%block body%}
+
+{% include './includes/nav.html' %}
+
+<div class="container-fluid pt-5" > 
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">{{category.title}}</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3" style="display: flex;">
+        {%for product in products %}
+        <div class="col-lg-4 col-md-6 pb-1"> 
+            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                <a href="{% url 'detail' product.pid %}" class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid" src="{{product.image.url}}" alt="">
+                </a>
+                <br>
+               <h5 class="font-weight-semi-bold m-0" style="text-align: center;">{{product.title}}</h5>
+            </div> 
+        </div>
+        {%endfor%}
+        </div>
+    </div>
+ 
+{%endblock%}

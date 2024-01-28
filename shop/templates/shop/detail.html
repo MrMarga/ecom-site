@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title %} Marga's E-shop {%endblock%}
+
+{%block body%}
+    <!-- Navbar Start -->
+    {% include './includes/nav.html' %}
+    <!-- Navbar End -->
+    <!-- Shop Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-5 pb-5">
+                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner border">
+                        {% for p in p_imgs %}
+                            <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                                <img class="w-100 h-100" src="{{ p.images.url }}" alt="Image">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="col-lg-7 pb-5">
+                <h3 class="font-weight-semi-bold">{{product.title}}</h3>
+                <div class="d-flex mb-3">
+                    <div class="text-primary mr-2">
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star-half-alt"></small>
+                        <small class="far fa-star"></small>
+            
+                                <h3 class="font-weight-semi-bold mb-4">{{product.price}}</h3>
+                                <p class="mb-4">{{product.description|safe }}</p>
+                                <div class="d-flex mb-3">
+                                    <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+                                    <form>
+                                        <input type="hidden" value="{{product.id}}" class="product-id" name="" id="">
+                                        <input type="hidden" value="{{product.title}}" class="product-title" name="" id="">
+                                        <input type="hidden" value="{{product.price}}" class="current-product-price" name="" id="">
+                                        {%for size in sizes%}
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="size-1" name="size">
+                                            <label class="custom-control-label" for="size-1">{{size.size}}</label>
+                                        </div>
+                                        {%endfor%}
+                                    </form>
+                                </div>
+                                    <div class="d-flex mb-4">
+                                            <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+                                                <form>
+                                                    {%for color in colors%}
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="color-1" name="color">
+                                                        <label class="custom-control-label" for="color-1">{{color.color}}</label>
+                                                    </div>
+                                                    {%endfor%}
+                                                </form>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-4 pt-2">
+                                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-primary btn-minus">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control bg-secondary text-center product-quantity-input" value="1" data-product-id="{{product.id}}">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-primary btn-plus">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- ... (other hidden inputs) -->
+                                                <!-- <input type="hidden" class="product-pid-{{product.id}}" value="{{product.pid}}">
+                                                <input type="hidden" class="product-image-{{product.id}}" value="{{product.image.url}}">
+                                                <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}">
+                                                <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}"> -->
+                                        
+                                                <button href="{%url 'add_item_to_cart' product.pid%}?" type="submit" class="add-to-cart-btn btn btn-sm text-dark p-0" >
+                                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                                </button>
+                                            </div>
+                  <!-- /---------------------------------------------------------------------------------------------->
+                 <div class="d-flex pt-2">
+                    <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                    <div class="d-inline-flex">
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews </a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <h4 class="mb-3">Product Description</h4>
+                        <p>{{product.description|safe}}</p>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <h4 class="mb-3">Additional Information</h4>
+                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                    </li>
+                                  </ul> 
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                    </li>
+                                  </ul> 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-pane-3">
+                        <h6 class="success" id="review-alert"> </h6>
+                            <h4 class="mb-4">( {{ reviews|length }} )  review{{ reviews|pluralize:"s" }} for "{{ product.title|title }}"</h4>
+                 <div class="row">
+                            <div class="col-md-6 review-list">
+                                <!-- Add a template div with a class "review-template" -->
+                                <div class="media mb-4 review-template" style="display: none;">
+                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6 class="user"></h6>
+                                        <small> - <i class="date"></i></small>
+                                        <div class="stars"></div>
+                                        <div class="text-primary mb-2 review-content"></div>
+                                    </div>
+                                </div>
+                                
+                                {% for r in reviews %}
+                                <div class="media mb-4">
+                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6>{{ r.user.username|title }}<small> - <i>{{ r.date|date:"d, M Y" }}</i></small></h6>
+                                        <div class="text-primary mb-2">
+                                            <p>{{ r.review }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Leave a review</h4>
+                                <small>Your email address will not be published. Required fields are marked *</small>
+                                <!-- form start -->
+                                {% if request.user.is_authenticated %}
+                                {% if make_review %}
+                                <form id="commentForm" class="hide-comment" action="{% url 'reviewPost' product.pid %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        {{ review_form.review }}
+                                    </div>
+                                            <div class="form-group">
+                                                <div class="d-flex my-3">
+                                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                                    <div class="text-primary">
+                                                        {{ review_form.rating }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                {{ review_form.username }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ review_form.email }}
+                                            </div> -->
+                                           
+                                            <div class="form-group mb-0">
+                                                <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                            </div>
+                                </form>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Detail End -->
+    <!-- Products Start -->
+
+    <div class="container-fluid py-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+               
+                <div class="owl-carousel related-carousel">
+                    {% for product in products %}
+                    <div class="card product-item border-0">
+                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                            <img class="img-fluid w-100" src="{{ product.image.url }}" alt="">
+                        </div>
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <h6 class="text-truncate mb-3">{{ product.title }}</h6>
+                            <div class="d-flex justify-content-center">
+                                <span>$</span><span class="current-product-price-{{product.id}}"><h6>{{product.price}}</h6></span>
+                                <h6 class="text-muted ml-2"><del>${{ product.old_price }}</del></h6>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between bg-light border">
+                            <a href="{% url 'detail' product.pid %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                            <input type="hidden" class="product-quantity-{{product.id}}" value="1"  id="product-quantity" >
+                            <input type="hidden" class="product-pid-{{product.id}}" value="{{product.pid}}">
+                            <input type="hidden" class="product-image-{{product.id}}" value="{{product.image.url}}">
+                            <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}">
+                            <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}">
+                            <button href="" type="submit" class="add-to-cart-btn btn  btn-sm text-dark p-0" data-index="{{product.id}}" id="add-to-cart-btn"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+           
+            </div>
+        </div>
+    </div>
+   
+    
+    
+    {%endblock%}
+   
+    
+
